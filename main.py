@@ -1,33 +1,28 @@
-from ast import Global
 from tkinter import *
 from tkinter import messagebox
 import time
 
-minute = 0
-minute_short = 1
-sec = 0
 cont = 0
 
-
 def intervalo_curto():
-  minute_short = 1
-  sec_short = 60
-  while sec_short >= 0:
-    minuto.config(text=minute_short)
-    segundo.config(text=sec_short)
+  nome.config(text="Intervalo Curto")
+  minute = 1
+  sec = 60
+  while sec >= 0:
+    minuto.config(text=f"0{minute}")
+    segundo.config(text=sec)
+    if sec < 10: 
+      segundo.config(text=f"0{sec}")
     janela.update()
-    if sec_short < 10: 
-      segundo.config(text=f"0{sec_short}")
-      janela.update()
-      time.sleep(0.1)
-      sec_short -= 1
-      print(sec_short)
-    if sec_short == 0 and minute_short > 0:
-      sec_short = 60
-      minute_short -= 1
-    if minute_short == 0 and sec_short == 0:
+    time.sleep(0.1)
+    sec -= 1
+    print(f"{minute}{sec}")
+    if minute > 0 and sec == 0:
+      minute -= 1
+      sec = 60
+    if minute == 0 and sec == 0:
       messagebox.showinfo("Pomodoro", "Fim do intervalo curto")
-      iniciar()
+      #iniciar.config(text ="Foco", width=6, command=iniciar)
 
 def iniciar():
   nome.config(text="Foco")
@@ -48,13 +43,13 @@ def iniciar():
     time.sleep(0.1)
     sec -= 1
     print(sec)
-    if sec == 0 and minute > 0:
-      sec = 60
+    if minute > 0 and sec == 0:
       minute -= 1
+      sec = 60
     if minute == 0 and sec == 0:
       messagebox.showinfo("Pomodoro", "Hora do intervalo curto")
       iniciar.config(text ="Intervalo", width=8, command=intervalo_curto)
-      #intervalo_curto()
+      
 
 
 def resetar():
@@ -85,4 +80,3 @@ iniciar.place(x=50, y=150)
 resetar.place(x=170, y=150)
 
 janela.mainloop()
-
